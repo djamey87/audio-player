@@ -1,29 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground: #1e2d2f;
+  --background: #f5e6e8;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground: #f5e6e8;
+    --background: #1e2d2f;
   }
+} */
+
+html {
+  overflow: hidden;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+@layer base {
+  .link-list {
+    background-color: black;
+  }
+
+  .vertical-scroll-container {
+    width: 100%;
+    /* transition: top 0.3s ease; */
+    max-height: 100px;
+    overflow-y: hidden;
+  }
+
+  .scroll-content {
+    position: absolute;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .scroll-content .focus {
+    background-color: red;
+  }
 }
 
 @layer utilities {

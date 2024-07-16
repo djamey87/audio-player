@@ -134,6 +134,8 @@ export const VerticalScroll = ({ menuItems = defaultItems }: Props) => {
     };
   }, [throttledScrollHandler]);
 
+  // TODO:
+  // map over children, to allow for composition: https://stackoverflow.com/questions/49496906/react-mapping-children-of-a-parent-component
   return (
     <div className="container">
       <div className="screen">
@@ -150,12 +152,6 @@ export const VerticalScroll = ({ menuItems = defaultItems }: Props) => {
               </li>
             ))}
           </ul>
-          {/* <div className="">Playlists</div>
-            <div className="option">Artists</div>
-            <div className="option selected">Songs</div>
-            <div className="option">Settings</div>
-            <div className="option">About</div>
-            <div className="option">Now Playing</div> */}
         </div>
       </div>
     </div>

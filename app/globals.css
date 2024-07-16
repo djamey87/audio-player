@@ -35,6 +35,12 @@ body {
   @apply font-primary;
   background-color: var(--background);
   color: var(--foreground);
+  cursor: pointer;
+  background: linear-gradient(
+    45deg,
+    var(--dark-background),
+    var(--light-background)
+  );
 }
 
 @layer base {

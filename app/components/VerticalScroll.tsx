@@ -1,6 +1,5 @@
 "use client";
 import { throttle, debounce } from "lodash";
-
 import { useEffect, useCallback, useReducer, useRef } from "react";
 
 type SwipeDirection = "neutral" | "up" | "down";
@@ -12,8 +11,8 @@ type ReducerState = {
 };
 
 type Action =
-  | { type: "SWIPE"; payload: { swipeDirection: SwipeDirection } }
-  | { type: "RESET_SWIPE_STATE" };
+  | { type: "SCROLL"; payload: { swipeDirection: SwipeDirection } }
+  | { type: "RESET_SCROLL_STATE" };
 
 const defaultState: ReducerState = {
   swipeDirection: "neutral",
@@ -23,7 +22,7 @@ const defaultState: ReducerState = {
 
 function mouseWheelReducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
-    case "SWIPE": {
+    case "SCROLL": {
       const indexChange = action.payload.swipeDirection === "down" ? -1 : 1;
       const currIndex = state.activeMenuIndex;
       const newIndex =
@@ -38,7 +37,7 @@ function mouseWheelReducer(state: ReducerState, action: Action): ReducerState {
         swipeDirection: action.payload.swipeDirection,
       };
     }
-    case "RESET_SWIPE_STATE": {
+    case "RESET_SCROLL_STATE": {
       return {
         ...state,
         activeMenuIndex: state.activeMenuIndex,
@@ -59,18 +58,18 @@ function useMouseWheel({
     menuItems,
   });
 
-  const scrollSwipe = (dir: SwipeDirection) => {
-    dispatch({ type: "SWIPE", payload: { swipeDirection: dir } });
+  const scroll = (dir: SwipeDirection) => {
+    dispatch({ type: "SCROLL", payload: { swipeDirection: dir } });
   };
 
-  const resetSwipeState = () => {
-    dispatch({ type: "RESET_SWIPE_STATE" });
+  const resetScrollState = () => {
+    dispatch({ type: "RESET_SCROLL_STATE" });
   };
 
   return {
     activeMenuIndex,
-    scrollSwipe,
-    resetSwipeState,
+    scroll,
+    resetScrollState,
   };
 }
 
@@ -96,7 +95,7 @@ const defaultItems = [
 export const VerticalScroll = ({ menuItems = defaultItems }: Props) => {
   const latestYDelta = useRef<number>(0);
 
-  const { activeMenuIndex, scrollSwipe, resetSwipeState } = useMouseWheel({
+  const { activeMenuIndex, scroll, resetScrollState } = useMouseWheel({
     menuItems,
   });
 
@@ -104,7 +103,7 @@ export const VerticalScroll = ({ menuItems = defaultItems }: Props) => {
     debounce(
       () => {
         latestYDelta.current = 0;
-        resetSwipeState();
+        resetScrollState();
       },
       100,
       { leading: false, trailing: true }
@@ -119,7 +118,7 @@ export const VerticalScroll = ({ menuItems = defaultItems }: Props) => {
     if (Math.abs(scrollDelta) > Math.abs(latestYDelta.current)) {
       const direction: SwipeDirection = scrollDelta < 0 ? "up" : "down";
 
-      scrollSwipe(direction);
+      scroll(direction);
     }
     latestYDelta.current = scrollDelta;
   };

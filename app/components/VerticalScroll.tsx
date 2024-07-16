@@ -74,7 +74,7 @@ function useMouseWheel({
 }
 
 type Props = {
-  menuItems: string[];
+  menuItems?: string[];
 };
 
 const defaultItems = [
@@ -135,18 +135,28 @@ export const VerticalScroll = ({ menuItems = defaultItems }: Props) => {
   }, [throttledScrollHandler]);
 
   return (
-    <div className="vertical-scroll-container">
-      <div className="scroll-content">
-        <ul>
-          {menuItems.map((item, index) => (
-            <li
-              key={`${index}-${item}`}
-              className={index === activeMenuIndex ? "focus" : ""}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+    <div className="container">
+      <div className="screen">
+        <div className="menu-options">
+          <ul>
+            {menuItems.map((item, index) => (
+              <li
+                key={`${index}-${item}`}
+                className={`option ${
+                  index === activeMenuIndex ? "selected" : ""
+                }`}
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+          {/* <div className="">Playlists</div>
+            <div className="option">Artists</div>
+            <div className="option selected">Songs</div>
+            <div className="option">Settings</div>
+            <div className="option">About</div>
+            <div className="option">Now Playing</div> */}
+        </div>
       </div>
     </div>
   );
